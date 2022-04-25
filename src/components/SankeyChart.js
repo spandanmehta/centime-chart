@@ -1,17 +1,9 @@
 import { Chart } from 'react-google-charts';
-import { useSelector } from 'react-redux';
 import Card from './ui/Card';
 import { useTranslation } from 'react-i18next';
 
-const SankeyChart = () => {
-  const storeData = useSelector(store => store.data);
-  const isLoading = useSelector(store => store.isLoading);
-  const dataArr = storeData.reduce(
-    (arr, item) => [...arr, [item.data.from, item.data.to, item.data.weight]],
-    []
-  );
+const SankeyChart = ({ isLoading, data }) => {
   const { t } = useTranslation();
-  const data = [['From', 'To', 'Weight'], ...dataArr];
 
   const options = {
     sankey: {
@@ -28,7 +20,7 @@ const SankeyChart = () => {
         <h2>Loading...</h2>
       ) : (
         <>
-          {storeData.length < 1 ? (
+          {data.length <= 1 ? (
             <h2>{t('addSomeData')}</h2>
           ) : (
             <Chart

@@ -37,10 +37,10 @@ const DataForm = () => {
   const DataRow = item => {
     return (
       <tr key={item.id}>
-        <td>{item.data.from}</td>
-        <td>{item.data.to}</td>
-        <td>{item.data.weight}</td>
-        <td>
+        <td className='px-4 py-2'>{item.data.from}</td>
+        <td className='px-4 py-2'>{item.data.to}</td>
+        <td className='px-4 py-2'>{item.data.weight}</td>
+        <td className='px-4 py-2'>
           <Button onClick={() => dispatch(deleteRow(item))}>
             {t('delete')}
           </Button>
@@ -75,10 +75,10 @@ const DataForm = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>{t('from')}</th>
-                    <th>{t('to')}</th>
-                    <th>{t('weight')}</th>
-                    <th></th>
+                    <th className='px-4 py-2'>{t('from')}</th>
+                    <th className='px-4 py-2'>{t('to')}</th>
+                    <th className='px-4 py-2'>{t('weight')}</th>
+                    <th className='px-4 py-2'></th>
                   </tr>
                 </thead>
                 <tbody>{storeData.map(item => DataRow(item))}</tbody>
