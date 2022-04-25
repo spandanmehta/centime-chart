@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const SankeyChart = () => {
   const storeData = useSelector(store => store.data);
+  const isLoading = useSelector(store => store.isLoading);
   const dataArr = storeData.reduce(
     (arr, item) => [...arr, [item.data.from, item.data.to, item.data.weight]],
     []
@@ -23,16 +24,22 @@ const SankeyChart = () => {
   };
   return (
     <Card>
-      {storeData.length < 1 ? (
-        <h2>{t('addSomeData')}</h2>
+      {isLoading ? (
+        <h2>Loading...</h2>
       ) : (
-        <Chart
-          chartType='Sankey'
-          width='100%'
-          height='500px'
-          data={data}
-          options={options}
-        />
+        <>
+          {storeData.length < 1 ? (
+            <h2>{t('addSomeData')}</h2>
+          ) : (
+            <Chart
+              chartType='Sankey'
+              width='100%'
+              height='500px'
+              data={data}
+              options={options}
+            />
+          )}
+        </>
       )}
     </Card>
   );

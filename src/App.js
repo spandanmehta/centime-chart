@@ -1,4 +1,3 @@
-import './App.css';
 import { useEffect, Suspense } from 'react';
 import { getChartData } from './features/sankey/sankeySlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,12 +12,9 @@ function App() {
     dispatch(getChartData());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <div className='App'>
+      <div className='App' data-testid='App'>
         <Header />
         <Dashboard />
       </div>

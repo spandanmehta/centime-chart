@@ -10,6 +10,7 @@ import Input from './ui/Input';
 const DataForm = () => {
   const dispatch = useDispatch();
   const storeData = useSelector(store => store.data);
+  const isLoading = useSelector(store => store.isLoading);
 
   const { t } = useTranslation();
 
@@ -65,66 +66,75 @@ const DataForm = () => {
 
   return (
     <Card>
-      {storeData.length > 0 && (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>{t('from')}</th>
-                <th>{t('to')}</th>
-                <th>{t('weight')}</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>{storeData.map(item => DataRow(item))}</tbody>
-          </table>
-        </div>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <>
+          {storeData.length > 0 && (
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>{t('from')}</th>
+                    <th>{t('to')}</th>
+                    <th>{t('weight')}</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>{storeData.map(item => DataRow(item))}</tbody>
+              </table>
+            </div>
+          )}
+          <div className='my-8'>
+            <form onSubmit={submitHandler}>
+              <Input
+                required
+                type='text'
+                placeholder={t('from')}
+                value={newData.data.from}
+                onChange={e =>
+                  setNewData(prev => {
+                    return {
+                      ...prev,
+                      data: { ...prev.data, from: e.target.value },
+                    };
+                  })
+                }
+              />
+              <Input
+                required
+                type='text'
+                placeholder={t('to')}
+                value={newData.data.to}
+                onChange={e =>
+                  setNewData(prev => {
+                    return {
+                      ...prev,
+                      data: { ...prev.data, to: e.target.value },
+                    };
+                  })
+                }
+              />
+              <Input
+                required
+                min='1'
+                type='number'
+                placeholder={t('weight')}
+                value={newData.data.weight}
+                onChange={e =>
+                  setNewData(prev => {
+                    return {
+                      ...prev,
+                      data: { ...prev.data, weight: e.target.value },
+                    };
+                  })
+                }
+              />
+              <Button type={'submit'}>{t('save')}</Button>
+            </form>
+          </div>
+        </>
       )}
-      <div className='my-8'>
-        <form onSubmit={submitHandler}>
-          <Input
-            required
-            type='text'
-            placeholder={t('from')}
-            value={newData.data.from}
-            onChange={e =>
-              setNewData(prev => {
-                return {
-                  ...prev,
-                  data: { ...prev.data, from: e.target.value },
-                };
-              })
-            }
-          />
-          <Input
-            required
-            type='text'
-            placeholder={t('to')}
-            value={newData.data.to}
-            onChange={e =>
-              setNewData(prev => {
-                return { ...prev, data: { ...prev.data, to: e.target.value } };
-              })
-            }
-          />
-          <Input
-            required
-            min='1'
-            type='number'
-            placeholder={t('weight')}
-            value={newData.data.weight}
-            onChange={e =>
-              setNewData(prev => {
-                return {
-                  ...prev,
-                  data: { ...prev.data, weight: e.target.value },
-                };
-              })
-            }
-          />
-          <Button type={'submit'}>{t('save')}</Button>
-        </form>
-      </div>
     </Card>
   );
 };
