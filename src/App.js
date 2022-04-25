@@ -1,24 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, Suspense } from 'react';
+import { getChartData } from './features/sankey/sankeySlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Header from './components/Header';
+import Dashboard from './components/Dashboard';
 
 function App() {
+  const isLoading = useSelector(store => store.isLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getChartData());
+  }, []);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <div className='App'>
+        <Header />
+        <Dashboard />
+      </div>
+    </Suspense>
   );
 }
 

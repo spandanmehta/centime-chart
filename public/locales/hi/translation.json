@@ -1,0 +1,9 @@
+{
+  "from": "From(H)",
+  "to": "To(H)",
+  "weight": "Weight(H)",
+  "save": "Save(H)",
+  "delete": "Delete(H)",
+  "edit": "Edit(H)",
+  "addSomeData": "Add some data to get started!(H)"
+}
