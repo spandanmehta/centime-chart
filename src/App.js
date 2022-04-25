@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getChartData());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
